@@ -34,11 +34,11 @@ class MainActivity3 : AppCompatActivity() {
         clMain.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 // Add a ComposeView at the clicked position.
-                viewIndex++
-                setComposeView(event.x.toInt(), event.y.toInt())
                 randomFireworkNumber = (0..1).random()
                 randomLineColorNumber = (0..5).random()
                 randomOrbColorNumber = (0..5).random()
+                viewIndex++
+                setComposeView(event.x.toInt(), event.y.toInt())
                 return@setOnTouchListener true
             }
             return@setOnTouchListener false }
@@ -69,24 +69,8 @@ class MainActivity3 : AppCompatActivity() {
                         // at a distance of 1/4 from the top of the fireworks component.
                         translationY = ((y-screenHeightPx/4)).toFloat()
                     }){
-                        val colorLine = when(randomLineColorNumber) {
-                            0 -> Color.White
-                            1 -> Color.Cyan
-                            2 -> Color.Green
-                            3 -> Color.Blue
-                            4 -> Color.Yellow
-                            5 -> Color.Red
-                            else -> { Color.Transparent }
-                        }
-                        val colorOrb = when(randomOrbColorNumber) {
-                            0 -> Color.White
-                            1 -> Color.Cyan
-                            2 -> Color.Green
-                            3 -> Color.Blue
-                            4 -> Color.Yellow
-                            5 -> Color.Red
-                            else -> { Color.Transparent }
-                        }
+                        val colorLine = randomColor(randomLineColorNumber)
+                        val colorOrb = randomColor(randomOrbColorNumber)
                         if (randomFireworkNumber == 0) {
                             FireworkNormal(
                                 width = fireworkWidth.dp,
@@ -110,4 +94,17 @@ class MainActivity3 : AppCompatActivity() {
 
 fun Context.dpToPx(dpValue: Float): Float {
     return dpValue * (resources.displayMetrics.densityDpi / 160f)
+}
+
+fun randomColor(randomNumber: Int): Color {
+    val color = when(randomNumber) {
+        0 -> Color.White
+        1 -> Color.Cyan
+        2 -> Color.Green
+        3 -> Color.Blue
+        4 -> Color.Yellow
+        5 -> Color.Red
+        else -> { Color.Transparent }
+    }
+    return color
 }
